@@ -11,6 +11,8 @@ const Minesweeper = {
     flagMode: false,
     selectedRow: 0,
     selectedCol: 0,
+    firstMove: true,
+    firstMoveCell: null,
 
     initializeGrid() {
         this.grid = [];
@@ -26,18 +28,32 @@ const Minesweeper = {
             }
             this.grid.push(rowArr);
         }
+        this.firstMove = true;
+        this.firstMoveCell = null;
     },
 
-    placeMinesAndNumbers() {
-        let placed = 0;
-        while (placed < this.numMines) {
-            const row = Math.floor(Math.random() * this.gridHeight);
-            const col = Math.floor(Math.random() * this.gridWidth);
-            if (!this.grid[row][col].mine) {
-                this.grid[row][col].mine = true;
-                placed++;
-            }
+    placeMinesAndNumbers(safeRow, safeCol) {
+        const totalCells = this.gridWidth * this.gridHeight;
+        const safeIdx = safeRow * this.gridWidth + safeCol;
+        // Generate a list of all possible indices except the safe cell
+        let indices = [];
+        for (let i = 0; i < totalCells - 1; i++) {
+            indices.push(i);
         }
+        // Shuffle indices
+        for (let i = indices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        // Take numMines indices
+        let mineIndices = indices.slice(0, this.numMines).map(idx => idx >= safeIdx ? idx + 1 : idx);
+        // Place mines
+        for (let idx of mineIndices) {
+            const row = Math.floor(idx / this.gridWidth);
+            const col = idx % this.gridWidth;
+            this.grid[row][col].mine = true;
+        }
+        // Calculate adjacent numbers
         for (let row = 0; row < this.gridHeight; row++) {
             for (let col = 0; col < this.gridWidth; col++) {
                 if (this.grid[row][col].mine) continue;
@@ -139,7 +155,7 @@ const Minesweeper = {
 
     resetGame() {
         this.initializeGrid();
-        this.placeMinesAndNumbers();
+        // Don't place mines yet
         this.renderGrid();
         this.resetTimer();
         this.updateMinesCounter();
@@ -205,6 +221,10 @@ const Minesweeper = {
 
     revealCell(row, col) {
         if (!this.timerRunning) this.startTimer();
+        if (this.firstMove) {
+            this.placeMinesAndNumbers(row, col);
+            this.firstMove = false;
+        }
         const cell = this.grid[row][col];
         if (cell.revealed || cell.flagged) return;
         cell.revealed = true;
@@ -247,6 +267,10 @@ const Minesweeper = {
     },
 
     flagCell(row, col) {
+        if (this.firstMove) {
+            this.placeMinesAndNumbers(row, col);
+            this.firstMove = false;
+        }
         const cell = this.grid[row][col];
         if (cell.revealed) {
             let flaggedCount = 0;
