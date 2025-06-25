@@ -1,0 +1,16 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "Modern accessible Minesweeper game for the web.",
+  "main": "main.js",
+  "scripts": {
+    "start": "python3 -m http.server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/user/minesweeper.git"
+  },
+  "author": "user",
+  "license": "MIT",
+  "homepage": "https://user.github.io/minesweeper/"
+}

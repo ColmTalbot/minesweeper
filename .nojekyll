@@ -1,0 +1,3 @@
+# .nojekyll
+# This file disables Jekyll on GitHub Pages, so all files (including those in folders starting with _)
+# are served correctly. Required for many single-page apps and modern JS projects.

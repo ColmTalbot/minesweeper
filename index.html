@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Github Pages base path for /minesweeper -->
+    <base href="/minesweeper/">
+    <!-- Add a canonical link for SEO and Github Pages -->
+    <link rel="canonical" href="https://user.github.io/minesweeper/" />
+</head>
+<body>
+    <h1>Minesweeper</h1>
+    <div id="difficulty-buttons" style="margin-bottom: 10px;">
+        <button type="button" id="easy-btn">Easy</button>
+        <button type="button" id="medium-btn">Medium</button>
+        <button type="button" id="hard-btn">Hard</button>
+    </div>
+    <div id="flag-reset-buttons" style="margin-bottom: 10px;">
+        <button type="button" id="flag-mode-btn">🚩 Flag Mode</button>
+        <button type="button" id="reset-btn">Reset</button>
+    </div>
+    <form id="settings-form" style="margin-bottom: 16px;">
+        <label>
+            Width:
+            <input type="number" id="width-input" min="5" max="30" value="10">
+        </label>
+        <label>
+            Height:
+            <input type="number" id="height-input" min="5" max="30" value="10">
+        </label>
+        <label>
+            Mines:
+            <input type="number" id="mines-input" min="1" max="100" value="15">
+        </label>
+        <button type="submit">Apply</button>
+    </form>
+    <div class="status-bar">
+        <span id="timer">Time: 0 s</span>
+        <span id="mines-counter">Found: 0/0</span>
+    </div>
+    <div id="minesweeper-grid"></div>
+    <script src="main.js"></script>
+</body>
+</html>
