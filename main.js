@@ -115,15 +115,22 @@ const Minesweeper = {
                 } else {
                     cell.textContent = '';
                 }
-                if (this.flagMode) {
-                    cell.addEventListener('click', () => this.flagCell(row, col));
-                    cell.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
+                // Always add both click and contextmenu listeners, and use current flagMode
+                cell.addEventListener('click', (e) => {
+                    if (this.flagMode) {
+                        this.flagCell(row, col);
+                    } else {
                         this.revealCell(row, col);
-                    });
-                } else {
-                    cell.addEventListener('click', () => this.revealCell(row, col));
-                }
+                    }
+                });
+                cell.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    if (this.flagMode) {
+                        this.revealCell(row, col);
+                    } else {
+                        this.flagCell(row, col);
+                    }
+                });
                 gridContainer.appendChild(cell);
             }
         }

@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/user/minesweeper.git"
+    "url": "git+https://github.com/colmtalbot/minesweeper.git"
   },
   "author": "user",
   "license": "MIT",
-  "homepage": "https://user.github.io/minesweeper/"
+  "homepage": "https://colmtalbot.github.io/minesweeper/"
 }
